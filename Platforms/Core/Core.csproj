@@ -24,6 +24,12 @@
     <Compile Update="..\..\Game\GameRoot.cs">
       <Link>src\GameRoot.cs</Link>
     </Compile>
+    <Compile Update="..\..\Game\Components\Physics.cs">
+      <Link>Components\Physics.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\GameRoot.cs">
+      <Link>GameRoot.cs</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

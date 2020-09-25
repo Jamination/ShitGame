@@ -6,10 +6,12 @@
         
         public override void Load()
         {
+            
         }
 
         public override void Update()
         {
+            
         }
 
         public override void Draw()

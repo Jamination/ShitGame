@@ -21,6 +21,9 @@
     <Compile Include="..\..\Game\**\*.cs">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Compile>
+    <Compile Update="..\..\Game\Components\Physics.cs">
+      <Link>Components\Physics.cs</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
