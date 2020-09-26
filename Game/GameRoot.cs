@@ -85,8 +85,9 @@ namespace ShitGame
         protected override void LoadContent()
         {
             Data.SpriteBatch = new SpriteBatch(GraphicsDevice);
-            Data.ScreenSize = new Vector2(Data.Graphics.PreferredBackBufferWidth, Data.Graphics.PreferredBackBufferHeight);
-            Data.MainRenderTarget = new RenderTarget2D(Data.Graphics.GraphicsDevice, GameSettings.VirtualWindowWidth, GameSettings.VirtualWindowHeight, false, SurfaceFormat.Color, DepthFormat.Depth24, 1, RenderTargetUsage.DiscardContents);
+            // Data.ScreenSize = new Vector2(Data.Graphics.PreferredBackBufferWidth, Data.Graphics.PreferredBackBufferHeight);
+            Data.MainRenderTarget = new RenderTarget2D(Data.Graphics.GraphicsDevice, GameSettings.VirtualWindowWidth, GameSettings.VirtualWindowHeight);
+            OnScreenSizeChange(this, EventArgs.Empty);
             Data.LoadAssets();
             ScreenManager.Initialise();
         }
@@ -125,18 +126,15 @@ namespace ShitGame
             GraphicsDevice.SetRenderTarget(Data.MainRenderTarget);
             GraphicsDevice.Clear(GameSettings.ClearColour);
             
-            Data.SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp,
-                DepthStencilState.Default, transformMatrix: Camera.Transform);
+            Data.SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp, transformMatrix: Camera.Transform);
             ScreenManager.DrawScenes();
             Data.SpriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
 
-            GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1f, 0);
-            Data.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default);
+            GraphicsDevice.Clear(Color.Black);
+            Data.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp);
             Data.SpriteBatch.Draw(Data.MainRenderTarget, Data.RenderRect, null, Data.MainRenderTargetColour, 0f, Vector2.Zero, SpriteEffects.None, 1f);
             Data.SpriteBatch.End();
-
-            GraphicsDevice.Textures[0] = null;
 
             base.Draw(gameTime);
         }
