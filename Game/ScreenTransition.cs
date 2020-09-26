@@ -21,46 +21,46 @@ namespace ShitGame
             switch (_transitionState)
             {
                 case TransitionState.Idle:
-                    Data.MainRenderTargetColour.R =
-                        Data.MainRenderTargetColour.G = Data.MainRenderTargetColour.B = 255;
+                    Data.ScreenColour.R =
+                        Data.ScreenColour.G = Data.ScreenColour.B = 255;
                     break;
                 case TransitionState.In:
-                    if (Data.MainRenderTargetColour.R <= 0)
+                    if (Data.ScreenColour.R <= 0)
                     {
-                        Data.MainRenderTargetColour.R =
-                            Data.MainRenderTargetColour.G = Data.MainRenderTargetColour.B = 0;
+                        Data.ScreenColour.R =
+                            Data.ScreenColour.G = Data.ScreenColour.B = 0;
                         _callBack.Invoke();
                         _transitionState = TransitionState.Out;
                     }
                     else
                     {
-                        if (Data.MainRenderTargetColour.R < _transitionSpeed)
+                        if (Data.ScreenColour.R < _transitionSpeed)
                         {
-                            Data.MainRenderTargetColour.R =
-                                Data.MainRenderTargetColour.G = Data.MainRenderTargetColour.B = 0;
+                            Data.ScreenColour.R =
+                                Data.ScreenColour.G = Data.ScreenColour.B = 0;
                         }
                         else
                         {
-                            Data.MainRenderTargetColour.R -= _transitionSpeed;
-                            Data.MainRenderTargetColour.G -= _transitionSpeed;
-                            Data.MainRenderTargetColour.B -= _transitionSpeed;
+                            Data.ScreenColour.R -= _transitionSpeed;
+                            Data.ScreenColour.G -= _transitionSpeed;
+                            Data.ScreenColour.B -= _transitionSpeed;
                         }
                     }
                     break;
                 case TransitionState.Out:
-                    if (Data.MainRenderTargetColour.R < 255)
+                    if (Data.ScreenColour.R < 255)
                     {
-                        if (Data.MainRenderTargetColour.R > 255 - _transitionSpeed)
+                        if (Data.ScreenColour.R > 255 - _transitionSpeed)
                         {
-                            Data.MainRenderTargetColour.R =
-                                Data.MainRenderTargetColour.G = Data.MainRenderTargetColour.B = 255;
+                            Data.ScreenColour.R =
+                                Data.ScreenColour.G = Data.ScreenColour.B = 255;
                             _transitionState = TransitionState.Idle;
                         }
                         else
                         {
-                            Data.MainRenderTargetColour.R += _transitionSpeed;
-                            Data.MainRenderTargetColour.G += _transitionSpeed;
-                            Data.MainRenderTargetColour.B += _transitionSpeed;
+                            Data.ScreenColour.R += _transitionSpeed;
+                            Data.ScreenColour.G += _transitionSpeed;
+                            Data.ScreenColour.B += _transitionSpeed;
                         }
                     }
                     break;

@@ -12,6 +12,10 @@ namespace ShitGame.Scenes
         
         public override void Open()
         {
+            Data.PenumbraComponent.Enabled = false;
+            Data.PenumbraComponent.Visible = false;
+            Data.PenumbraComponent.Lights.Clear();
+
             Camera.Position = Data.ScreenCentre;
             
             Button_Play = new UI_Button("Play", Data.ScreenCentre - new Vector2(0f, 20f), () => ScreenManager.EnterScreen(ScreenTypes.GameScreen));
