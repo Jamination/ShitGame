@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ShitGame.Components;
 
 namespace ShitGame
@@ -7,15 +8,21 @@ namespace ShitGame
     {
         public static GameObject[] GameObjects = new GameObject[Data.MaxObjects];
 
-        public static int GetInactiveGameObject()
-        {
+        static readonly Stack<int> _freeIDs = new Stack<int>();
+
+static Pool(){
             for (int i = 0; i < GameObjects.Length; i++)
             {
                 if (!GameObjects[i].Active)
-                    return (int)GameObjects[i].ID;
+                    _freeIDs.Push(i);
             }
+}
+
+        public static int GetInactiveGameObject()
+        {
+            if (_freeIDs.TryPop(out var id))
+                return id;
             throw new Exception("Max game objects reached!");
-            return -1;
         }
     }
 }
