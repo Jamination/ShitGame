@@ -2,7 +2,7 @@
 
 namespace ShitGame.Components
 {
-    public struct GameObject
+    public struct StaticObject
     {
         public uint ID;
         public bool Active;

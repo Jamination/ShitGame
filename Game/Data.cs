@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ShitGame;
+using tainicom.Aether.Physics2D.Dynamics;
 
 namespace ShitGame
 {
@@ -30,11 +31,28 @@ namespace ShitGame
         public static Random Random = new Random();
 
         public static SpriteFont ButtonFont;
+        
+        public static Texture2D Texture_Player;
 
-        public const uint MaxObjects = 1000;
+        public const uint MaxObjects_Static = 1000;
+
+        public static readonly World World = new World() { Gravity = new Vector2(0f), };
+        
+        public const float PIXELS_PER_METER = 100,
+            SIM_UNITS_PER_PIXEL = 1 / PIXELS_PER_METER;
+
+        public static float FromSim(float simUnits) => simUnits * PIXELS_PER_METER;
+        public static float FromSim(double simUnits) => (float)(simUnits * PIXELS_PER_METER);
+        public static float FromSim(int simUnits) => simUnits * PIXELS_PER_METER;
+        public static Vector2 FromSim(Vector2 simUnits) => simUnits * PIXELS_PER_METER;
+        public static float ToSim(float displayUnits) => displayUnits * SIM_UNITS_PER_PIXEL;
+        public static float ToSim(double displayUnits) => (float)(displayUnits * SIM_UNITS_PER_PIXEL);
+        public static float ToSim(int displayUnits) => displayUnits * SIM_UNITS_PER_PIXEL;
+        public static Vector2 ToSim(Vector2 displayUnits) => displayUnits * SIM_UNITS_PER_PIXEL;
 
         public static void LoadAssets()
         {
+            Texture_Player = Content.Load<Texture2D>("Sprites/Shit");
             ButtonFont = Content.Load<SpriteFont>("Fonts/ButtonFont");
         }
     }

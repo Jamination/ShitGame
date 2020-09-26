@@ -11,7 +11,7 @@ namespace ShitGame
         public static Matrix Transform;
         public static Viewport Viewport;
         
-        public static Vector2 CameraUp => new Vector2((float)Math.Cos(Rotation - (float)Math.PI / 2), (float)Math.Sin(Rotation - (float)Math.PI / 2));
+        public static Vector2 CameraUp => new Vector2(MathF.Cos(Rotation - MathF.PI / 2), MathF.Sin(Rotation - MathF.PI / 2));
 
         public static void Load()
         {

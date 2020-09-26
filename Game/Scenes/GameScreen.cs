@@ -8,16 +8,19 @@ namespace ShitGame.Scenes
         
         public override void Open()
         {
-            
+            Pool.Reset();
+            Players.Load();
         }
 
         public override void Update()
         {
+            Data.World.Step(Time.DeltaTime);
+            Players.Update();
         }
 
         public override void Draw()
         {
-            
+            Players.Draw();
         }
 
         public override void Close(ExitAction exitAction)

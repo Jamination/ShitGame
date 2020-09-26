@@ -27,6 +27,26 @@ namespace ShitGame
             );
         }
         
+        public static void Draw(ref Sprite sprite, Vector2 position, Vector2 scale, float rotation = 0f)
+        {
+            var centerOrigin = Vector2.Zero;
+            
+            if (sprite.Centered)
+                centerOrigin = sprite.Texture.Bounds.Size.ToVector2() * .5f;
+            
+            Data.SpriteBatch.Draw(
+                sprite.Texture,
+                new Vector2((int)position.X, (int)position.Y),
+                sprite.SourceRect,
+                sprite.Colour,
+                rotation,
+                centerOrigin + sprite.Origin,
+                scale,
+                sprite.Effects,
+                sprite.Depth
+            );
+        }
+        
         public static void Draw(ref Text text, ref Transform transform)
         {
             var centerOrigin = Vector2.Zero;

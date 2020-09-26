@@ -103,7 +103,7 @@ namespace ShitGame.GUI
                             break;
                         case UI_ButtonState.Hovering:
                             Text.Colour = Color.Lerp(Text.Colour, HoveringTextColour, .25f);
-                            Transform.Scale = Vector2.Lerp(Transform.Scale, new Vector2(1.25f) - new Vector2((float)Math.Sin(_tick)) * .05f, .25f);
+                            Transform.Scale = Vector2.Lerp(Transform.Scale, new Vector2(1.25f) - new Vector2(MathF.Sin(_tick)) * .05f, .25f);
                             _tick += .1f;
                             break;
                         case UI_ButtonState.Down:

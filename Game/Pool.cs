@@ -6,17 +6,23 @@ namespace ShitGame
 {
     public static class Pool
     {
-        public static GameObject[] GameObjects = new GameObject[Data.MaxObjects];
+        public static StaticObject[] GameObjects_Static = new StaticObject[Data.MaxObjects_Static];
 
-        static readonly Stack<int> _freeIDs = new Stack<int>();
+        private static readonly Stack<int> _freeIDs = new Stack<int>();
 
-static Pool(){
-            for (int i = 0; i < GameObjects.Length; i++)
+        static Pool(){
+            for (int i = 0; i < GameObjects_Static.Length; i++)
             {
-                if (!GameObjects[i].Active)
+                if (!GameObjects_Static[i].Active)
                     _freeIDs.Push(i);
             }
-}
+        }
+
+        public static void Reset()
+        {
+            for (int i = 0; i < GameObjects_Static.Length; i++)
+                GameObjects_Static[i].Active = false;
+        }
 
         public static int GetInactiveGameObject()
         {
