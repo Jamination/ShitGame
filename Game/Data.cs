@@ -31,6 +31,8 @@ namespace ShitGame
 
         public static SpriteFont ButtonFont;
 
+        public const uint MaxObjects = 1000;
+
         public static void LoadAssets()
         {
             ButtonFont = Content.Load<SpriteFont>("Fonts/ButtonFont");

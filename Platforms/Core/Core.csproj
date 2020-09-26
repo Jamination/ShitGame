@@ -30,6 +30,12 @@
       <Link>GUI\UI_Window.cs</Link>
     </Compile>
     <Compile Remove="..\..\Game\UI\**" />
+    <Compile Update="..\..\Game\Components\GameObject.cs">
+      <Link>Components\GameObject.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Components\Body.cs">
+      <Link>Components\Body.cs</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

@@ -13,7 +13,6 @@ namespace ShitGame.Scenes
 
         public override void Update()
         {
-            
         }
 
         public override void Draw()
