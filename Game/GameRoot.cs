@@ -21,7 +21,12 @@ namespace ShitGame
         {
             Data.Root = this;
             Data.Window = Window;
-            Data.Graphics = new GraphicsDeviceManager(this);
+            Data.Graphics = new GraphicsDeviceManager(this){
+                PreferredBackBufferWidth=GameSettings.StartWindowWidth,
+                PreferredBackBufferHeight=GameSettings.StartWindowHeight,
+                IsFullScreen = GameSettings.StartFullScreen,
+                HardwareModeSwitch=false
+            };
             Content.RootDirectory = "Content";
             Data.Content = Content;
         }
@@ -36,16 +41,8 @@ namespace ShitGame
             Window.AllowUserResizing = true;
             Window.AllowAltF4 = true;
 
-            Data.Graphics.IsFullScreen = GameSettings.StartFullScreen;
-            Data.Graphics.HardwareModeSwitch = false;
-
-            Data.Graphics.PreferMultiSampling = true;
             Data.Graphics.GraphicsProfile = GraphicsProfile.HiDef;
-            Data.Graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
             Data.Graphics.SynchronizeWithVerticalRetrace = true;
-            
-            Data.Graphics.PreferredBackBufferWidth = GameSettings.StartWindowWidth;
-            Data.Graphics.PreferredBackBufferHeight = GameSettings.StartWindowHeight;
             
             Data.Graphics.ApplyChanges();
             
