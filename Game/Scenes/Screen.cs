@@ -1,10 +1,13 @@
-﻿﻿﻿using ShitGame.GUI;
+﻿﻿﻿using Microsoft.Xna.Framework;
+  using ShitGame.GUI;
 
   namespace ShitGame.Scenes
 {
     public abstract class Screen
     {
         public DisplayState DisplayState;
+
+        public Color ClearColour = new Color(0f, .05f, .1f, 1f);
 
         public virtual void Open()
         {

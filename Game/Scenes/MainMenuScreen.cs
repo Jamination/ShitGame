@@ -12,6 +12,8 @@ namespace ShitGame.Scenes
         
         public override void Open()
         {
+            Camera.Position = Data.ScreenCentre;
+            
             Button_Play = new UI_Button("Play", Data.ScreenCentre - new Vector2(0f, 20f), () => ScreenManager.EnterScreen(ScreenTypes.GameScreen));
             Button_Play.Open();
             Button_Quit = new UI_Button("Quit", Data.ScreenCentre + new Vector2(0f, 20f), () => Close(ExitAction.ExitGame));

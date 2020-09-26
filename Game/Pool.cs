@@ -10,7 +10,8 @@ namespace ShitGame
 
         private static readonly Stack<int> _freeIDs = new Stack<int>();
 
-        static Pool(){
+        static Pool()
+        {
             for (int i = 0; i < GameObjects_Static.Length; i++)
             {
                 if (!GameObjects_Static[i].Active)
@@ -20,8 +21,12 @@ namespace ShitGame
 
         public static void Reset()
         {
+            _freeIDs.Clear();
             for (int i = 0; i < GameObjects_Static.Length; i++)
+            {
                 GameObjects_Static[i].Active = false;
+                _freeIDs.Push(i);
+            }
         }
 
         public static int GetInactiveGameObject()

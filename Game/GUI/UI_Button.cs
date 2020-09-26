@@ -10,7 +10,7 @@ namespace ShitGame.GUI
         public Text Text;
         public Transform Transform;
         
-        public Action Callback;
+        private Action _callBack;
 
         public Color 
             IdleColour, IdleTextColour,
@@ -30,9 +30,9 @@ namespace ShitGame.GUI
 
         private float _tick = 0f;
 
-        public UI_Button(string message, Vector2 position, Action callback)
+        public UI_Button(string message, Vector2 position, Action callBack)
         {
-            Callback = callback;
+            _callBack = callBack;
 
             IdleTextColour = Color.White;
             HoveringTextColour = Color.LightGray;
@@ -84,7 +84,7 @@ namespace ShitGame.GUI
                         else if (_buttonPress.Released() && _hasBeenPressed)
                         {
                             ButtonState = UI_ButtonState.Released;
-                            Callback.Invoke();
+                            _callBack.Invoke();
                         }
                     }
                     else

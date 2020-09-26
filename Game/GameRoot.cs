@@ -121,7 +121,7 @@ namespace ShitGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.SetRenderTarget(Data.MainRenderTarget);
-            GraphicsDevice.Clear(GameSettings.ClearColour);
+            GraphicsDevice.Clear(ScreenManager.CurrentScreen.ClearColour);
             
             Data.SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp, transformMatrix: Camera.Transform);
             ScreenManager.DrawScenes();

@@ -4,6 +4,6 @@
     {
         In,
         Out,
-        None,
+        Idle,
     }
 }

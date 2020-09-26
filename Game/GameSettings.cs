@@ -11,7 +11,5 @@ namespace ShitGame
         public const int VirtualWindowHeight = 360;
         
         public const bool StartFullScreen = false;
-
-        public static readonly Color ClearColour = new Color(0f, .05f, .1f, 1f);
     }
 }

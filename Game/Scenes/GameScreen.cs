@@ -1,4 +1,5 @@
-﻿using ShitGame.GUI;
+﻿using Microsoft.Xna.Framework;
+using ShitGame.GUI;
 
 namespace ShitGame.Scenes
 {
@@ -8,14 +9,18 @@ namespace ShitGame.Scenes
         
         public override void Open()
         {
+            ClearColour = new Color(0f, .1f, .05f, 1f);
             Pool.Reset();
+            Data.World.Clear();
             Players.Load();
+            Camera.Position = Data.FromSim(Players.Bodies[0].Position);
         }
 
         public override void Update()
         {
-            Data.World.Step(Time.DeltaTime);
+            Data.World.Step((float)Time.GameTime.ElapsedGameTime.TotalMilliseconds);
             Players.Update();
+            Camera.Position = Vector2.Lerp(Camera.Position, Data.FromSim(Players.Bodies[0].Position), .1f);
         }
 
         public override void Draw()
