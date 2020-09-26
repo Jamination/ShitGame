@@ -100,15 +100,16 @@ namespace ShitGame.GUI
                             break;
                         case UI_ButtonState.Hovering:
                             Text.Colour = Color.Lerp(Text.Colour, HoveringTextColour, .25f);
-                            Transform.Scale -= new Vector2((float)Math.Sin(_tick)) * .01f;
+                            Transform.Scale = Vector2.Lerp(Transform.Scale, new Vector2(1.25f) - new Vector2((float)Math.Sin(_tick)) * .05f, .25f);
                             _tick += .1f;
                             break;
                         case UI_ButtonState.Down:
                             Text.Colour = Color.Lerp(Text.Colour, PressedTextColour, .5f);
-                            Transform.Scale = Vector2.Lerp(Transform.Scale, new Vector2(.75f), .5f);
+                            Transform.Scale = Vector2.Lerp(Transform.Scale, Vector2.One, .5f);
                             break;
                         case UI_ButtonState.Released:
-                            Transform.Scale = Vector2.One;
+                            Transform.Scale = new Vector2(1.25f);
+                            ButtonState = UI_ButtonState.Hovering;
                             break;
                     }
                     break;

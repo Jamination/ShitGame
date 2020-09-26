@@ -12,9 +12,9 @@ namespace ShitGame.Scenes
         
         public override void Open()
         {
-            Button_Play = new UI_Button("Play", Data.ScreenCentre, () => ScreenManager.EnterScreen(ScreenTypes.GameScreen));
+            Button_Play = new UI_Button("Play", Data.ScreenCentre - new Vector2(0f, 20f), () => ScreenManager.EnterScreen(ScreenTypes.GameScreen));
             Button_Play.Open();
-            Button_Quit = new UI_Button("Quit", Data.ScreenCentre + new Vector2(0f, 40f), () => Close(ExitAction.ExitGame));
+            Button_Quit = new UI_Button("Quit", Data.ScreenCentre + new Vector2(0f, 20f), () => Close(ExitAction.ExitGame));
             Button_Quit.Open();
         }
 
