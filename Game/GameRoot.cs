@@ -37,6 +37,7 @@ namespace ShitGame
             Window.AllowAltF4 = true;
 
             Data.Graphics.IsFullScreen = GameSettings.StartFullScreen;
+            Data.Graphics.HardwareModeSwitch = false;
 
             Data.Graphics.PreferMultiSampling = true;
             Data.Graphics.GraphicsProfile = GraphicsProfile.HiDef;
