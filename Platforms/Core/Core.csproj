@@ -30,6 +30,27 @@
     <Compile Update="..\..\Game\GameRoot.cs">
       <Link>GameRoot.cs</Link>
     </Compile>
+    <Compile Update="..\..\Game\GUI\UI_Base.cs">
+      <Link>GUI\UI_Base.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\GUI\ExitAction.cs">
+      <Link>GUI\ExitAction.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\GUI\DisplayState.cs">
+      <Link>GUI\DisplayState.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\GUI\Button.cs">
+      <Link>GUI\Button.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Components\Text.cs">
+      <Link>Components\Text.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Scenes\GameScreen.cs">
+      <Link>Scenes\GameScreen.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Scenes\GameScreen.cs">
+      <Link>Screens\GameScreen.cs</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

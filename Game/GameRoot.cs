@@ -4,13 +4,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ShitGame;
+using ShitGame.GUI;
 using ShitGame.Scenes;
 
 namespace ShitGame
 {
     public sealed class GameRoot : Game
     {
-        ICondition _quit =
+        private ICondition _quit =
             new AnyCondition(
                 new KeyboardCondition(Keys.Escape),
                 new GamePadCondition(GamePadButton.Back, 0)
@@ -18,7 +19,7 @@ namespace ShitGame
         
         public GameRoot()
         {
-            Data.GameInstance = this;
+            Data.Root = this;
             Data.Window = Window;
             Data.Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -27,7 +28,7 @@ namespace ShitGame
         
         protected override void Initialize()
         {
-            Window.Title = "Platformer Test";
+            Window.Title = "Shit Game";
             
             IsMouseVisible = true;
             IsFixedTimeStep = true;
@@ -86,7 +87,7 @@ namespace ShitGame
             Data.ScreenSize = new Vector2(Data.Graphics.PreferredBackBufferWidth, Data.Graphics.PreferredBackBufferHeight);
             Data.MainRenderTarget = new RenderTarget2D(Data.Graphics.GraphicsDevice, GameSettings.VirtualWindowWidth, GameSettings.VirtualWindowHeight, false, SurfaceFormat.Color, DepthFormat.Depth24, 1, RenderTargetUsage.DiscardContents);
             Data.LoadAssets();
-            SceneManager.Initialise();
+            ScreenManager.Initialise();
         }
 
         protected override void Update(GameTime gameTime)
@@ -97,11 +98,21 @@ namespace ShitGame
             base.Update(gameTime);
             
             InputHelper.UpdateSetup();
-            
+
             if (_quit.Pressed())
-                Exit();
+            {
+                switch (ScreenManager.ScreenType)
+                {
+                    case ScreenTypes.GameScreen:
+                        ScreenManager.EnterScreen(ScreenTypes.MainMenuScreen);
+                        break;
+                    case ScreenTypes.MainMenuScreen:
+                        ScreenTransition.Begin(() => Exit());
+                        break;
+                }
+            }
             
-            SceneManager.UpdateScenes();
+            ScreenManager.UpdateScenes();
             
             Camera.Update();
             InputHelper.UpdateCleanup();
@@ -114,13 +125,13 @@ namespace ShitGame
             
             Data.SpriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, SamplerState.PointClamp,
                 DepthStencilState.Default, transformMatrix: Camera.Transform);
-            SceneManager.DrawScenes();
+            ScreenManager.DrawScenes();
             Data.SpriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
 
             GraphicsDevice.Clear(ClearOptions.Target, Color.Black, 1f, 0);
             Data.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default);
-            Data.SpriteBatch.Draw(Data.MainRenderTarget, Data.RenderRect, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 1f);
+            Data.SpriteBatch.Draw(Data.MainRenderTarget, Data.RenderRect, null, Data.MainRenderTargetColour, 0f, Vector2.Zero, SpriteEffects.None, 1f);
             Data.SpriteBatch.End();
 
             GraphicsDevice.Textures[0] = null;
@@ -130,7 +141,7 @@ namespace ShitGame
 
         protected override void Dispose(bool disposing)
         {
-            SceneManager.CurrentScene.Unload();
+            ScreenManager.CurrentScreen.Close(ExitAction.ExitGame);
             base.Dispose(disposing);
         }
     }

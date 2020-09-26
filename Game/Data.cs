@@ -13,9 +13,10 @@ namespace ShitGame
         public static SpriteBatch SpriteBatch;
         public static GameWindow Window;
         public static ContentManager Content;
-        public static Game GameInstance;
+        public static Game Root;
 
         public static RenderTarget2D MainRenderTarget;
+        public static Color MainRenderTargetColour = Color.White;
         
         public static Rectangle RenderRect;
 
@@ -28,8 +29,11 @@ namespace ShitGame
         
         public static Random Random = new Random();
 
+        public static SpriteFont ButtonFont;
+
         public static void LoadAssets()
         {
+            ButtonFont = Content.Load<SpriteFont>("Fonts/ButtonFont");
         }
     }
 }

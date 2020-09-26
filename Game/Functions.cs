@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using ShitGame.Components;
 
 namespace ShitGame
@@ -23,6 +24,26 @@ namespace ShitGame
                 transform.Scale,
                 sprite.Effects,
                 sprite.Depth
+            );
+        }
+        
+        public static void Draw(ref Text text, ref Transform transform)
+        {
+            var centerOrigin = Vector2.Zero;
+
+            if (text.Centered)
+                centerOrigin = text.SpriteFont.MeasureString(text.Message) * .5f;
+
+            Data.SpriteBatch.DrawString(
+                text.SpriteFont,
+                text.Message,
+                transform.Position,
+                text.Colour,
+                transform.Rotation,
+                centerOrigin,
+                transform.Scale,
+                text.Effects,
+                text.Depth
             );
         }
         
