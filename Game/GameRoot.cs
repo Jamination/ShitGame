@@ -107,6 +107,7 @@ namespace ShitGame
                         ScreenManager.EnterScreen(ScreenTypes.MainMenuScreen);
                         break;
                     case ScreenTypes.MainMenuScreen:
+                        ScreenManager.CurrentScreen.Close(ExitAction.ExitGame);
                         ScreenTransition.Begin(() => Exit());
                         break;
                 }
