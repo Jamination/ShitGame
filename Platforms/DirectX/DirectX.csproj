@@ -20,6 +20,16 @@
     <Compile Include="..\..\Game\**\*.cs">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Compile>
+    <Compile Remove="..\..\Game\UI\**" />
+    <Compile Update="..\..\Game\GUI\UI_Button.cs">
+      <Link>GUI\UI_Button.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\GUI\UI_ButtonState.cs">
+      <Link>GUI\UI_ButtonState.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\GUI\UI_Window.cs">
+      <Link>GUI\UI_Window.cs</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

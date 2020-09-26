@@ -19,6 +19,8 @@ namespace ShitGame.GUI
 
         public Rectangle Bounds;
 
+        private bool _hasBeenPressed = false;
+
         public UI_ButtonState ButtonState = UI_ButtonState.Idle;
         
         private ICondition _buttonPress =
@@ -74,11 +76,12 @@ namespace ShitGame.GUI
                         
                         if (_buttonPress.Pressed())
                         {
+                            _hasBeenPressed = true;
                             ButtonState = UI_ButtonState.Pressed;
                         }
-                        else if (_buttonPress.Held())
+                        else if (_buttonPress.Held() && _hasBeenPressed)
                             ButtonState = UI_ButtonState.Down;
-                        else if (_buttonPress.Released())
+                        else if (_buttonPress.Released() && _hasBeenPressed)
                         {
                             ButtonState = UI_ButtonState.Released;
                             Callback.Invoke();
