@@ -22,43 +22,6 @@
     <Compile Include="..\..\Game\**\*.cs">
       <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
     </Compile>
-    <Compile Update="..\..\Game\GUI\UI_ButtonState.cs">
-      <Link>GUI\UI_ButtonState.cs</Link>
-    </Compile>
-    <Compile Update="..\..\Game\GUI\UI_Window.cs">
-      <Link>GUI\UI_Window.cs</Link>
-    </Compile>
-    <Compile Remove="..\..\Game\UI\**" />
-    <Compile Update="..\..\Game\Components\GameObject.cs">
-      <Link>Components\GameObject.cs</Link>
-    </Compile>
-    <Compile Update="..\..\Game\Components\Body.cs">
-      <Link>Components\Body.cs</Link>
-    </Compile>
-    <Compile Update="..\..\Game\Scenes\EditorScreen.cs">
-      <Link>Screens\EditorScreen.cs</Link>
-    </Compile>
-    <Compile Update="..\..\Game\Scenes\EditorScreen.cs">
-      <Link>Scenes\EditorScreen.cs</Link>
-    </Compile>
-    <Compile Update="..\..\Game\Scenes\GameScreen.cs">
-      <Link>Scenes\GameScreen.cs</Link>
-    </Compile>
-    <Compile Update="..\..\Game\Scenes\MainMenuScreen.cs">
-      <Link>Scenes\MainMenuScreen.cs</Link>
-    </Compile>
-    <Compile Update="..\..\Game\Scenes\Screen.cs">
-      <Link>Scenes\Screen.cs</Link>
-    </Compile>
-    <Compile Update="..\..\Game\Scenes\ScreenManager.cs">
-      <Link>Scenes\ScreenManager.cs</Link>
-    </Compile>
-    <Compile Update="..\..\Game\Scenes\ScreenTypes.cs">
-      <Link>Scenes\ScreenTypes.cs</Link>
-    </Compile>
-    <Compile Update="..\..\Game\Screens\EditorScreen.cs">
-      <Link>Screens\EditorScreen.cs</Link>
-    </Compile>
   </ItemGroup>
 
   <ItemGroup>
