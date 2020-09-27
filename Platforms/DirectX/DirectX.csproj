@@ -39,8 +39,4 @@
     </MonoGameContentReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\penumbra\Source\MonoGame.Penumbra.WindowsDX.csproj" />
-  </ItemGroup>
-
 </Project>
