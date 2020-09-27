@@ -3,7 +3,6 @@ using Apos.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Penumbra;
 using ShitGame;
 using tainicom.Aether.Physics2D.Dynamics;
 
@@ -17,7 +16,7 @@ namespace ShitGame
         public static ContentManager Content;
         public static Game Root;
 
-        public static RenderTarget2D GameRenderTarget, LightRenderTarget;
+        public static RenderTarget2D GameRenderTarget;
         public static Color ScreenColour = Color.White;
         
         public static Rectangle RenderRect;
@@ -32,8 +31,6 @@ namespace ShitGame
         public static Random Random = new Random();
 
         public static SpriteFont ButtonFont;
-
-        public static PenumbraComponent PenumbraComponent;
         
         public static Texture2D Texture_Player;
 

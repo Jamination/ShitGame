@@ -3,7 +3,6 @@ using Apos.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Penumbra;
 using ShitGame;
 using ShitGame.GUI;
 using ShitGame.Scenes;
@@ -30,8 +29,6 @@ namespace ShitGame
             };
             Content.RootDirectory = "Content";
             Data.Content = Content;
-            Data.PenumbraComponent = new PenumbraComponent(this);
-            Data.PenumbraComponent.SpriteBatchTransformEnabled = true;
         }
         
         protected override void Initialize()
@@ -50,7 +47,6 @@ namespace ShitGame
             Data.Graphics.ApplyChanges();
             base.Initialize();
             
-            Data.PenumbraComponent.Initialize();
             InputHelper.Setup(this);
 
             Window.ClientSizeChanged += OnScreenSizeChange;
@@ -87,7 +83,6 @@ namespace ShitGame
         {
             Data.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Data.GameRenderTarget = new RenderTarget2D(Data.Graphics.GraphicsDevice, GameSettings.VirtualWindowWidth, GameSettings.VirtualWindowHeight);
-            Data.LightRenderTarget = new RenderTarget2D(Data.Graphics.GraphicsDevice, GameSettings.VirtualWindowWidth, GameSettings.VirtualWindowHeight);
             OnScreenSizeChange(null, null);
             Data.LoadAssets();
             ScreenManager.Initialise();
@@ -127,25 +122,14 @@ namespace ShitGame
             GraphicsDevice.SetRenderTarget(Data.GameRenderTarget);
             GraphicsDevice.Clear(ScreenManager.CurrentScreen.ClearColour);
             
-            Data.PenumbraComponent.Transform = Camera.Transform;
             Data.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, transformMatrix: Camera.Transform);
             ScreenManager.DrawScenes();
-
             Data.SpriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
             
-            GraphicsDevice.SetRenderTarget(Data.LightRenderTarget);
-            GraphicsDevice.Clear(Color.Transparent);
-            Data.PenumbraComponent.Transform = Camera.Transform;
-            Data.PenumbraComponent.BeginDraw();
-            Data.PenumbraComponent.Draw(gameTime);
-            
-            GraphicsDevice.SetRenderTarget(null);
-
             GraphicsDevice.Clear(Color.Black);
             Data.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp);
             Data.SpriteBatch.Draw(Data.GameRenderTarget, Data.RenderRect, null, Data.ScreenColour, 0f, Vector2.Zero, SpriteEffects.None, 1f);
-            Data.SpriteBatch.Draw(Data.LightRenderTarget, Data.RenderRect, null, Data.ScreenColour, 0f, Vector2.Zero, SpriteEffects.None, 1f);
             Data.SpriteBatch.End();
 
             base.Draw(gameTime);
