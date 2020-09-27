@@ -1,6 +1,9 @@
-namespace ShitGame.Levels {
-	public static class Level_1 {
-		public static void Load() {
+namespace ShitGame.Levels
+{
+	public static class Level_1
+	{
+		public static void Load()
+		{
 			Functions.SetPlayerSpawnPoint(0, 0);
 			Functions.PlaceStaticObject(176, 53, ObjectType.Wall);
 			Functions.PlaceStaticObject(-25, 258, ObjectType.Wall);

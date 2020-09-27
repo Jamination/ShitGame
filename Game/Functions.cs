@@ -9,9 +9,12 @@ using ShitGame.Components;
 using ShitGame.Levels;
 using tainicom.Aether.Physics2D.Dynamics;
 
-namespace ShitGame {
-    public static class Functions {
-        public static void Draw(ref Sprite sprite, ref Transform transform) {
+namespace ShitGame
+{
+    public static class Functions
+    {
+        public static void Draw(ref Sprite sprite, ref Transform transform)
+        {
             var centerOrigin = Vector2.Zero;
 
             if (sprite.Centered)
@@ -30,7 +33,8 @@ namespace ShitGame {
             );
         }
 
-        public static void Draw(ref Sprite sprite, Vector2 position, Vector2 scale, float rotation = 0f) {
+        public static void Draw(ref Sprite sprite, Vector2 position, Vector2 scale, float rotation = 0f)
+        {
             var centerOrigin = Vector2.Zero;
 
             if (sprite.Centered)
@@ -49,7 +53,8 @@ namespace ShitGame {
             );
         }
 
-        public static void Draw(ref Text text, ref Transform transform) {
+        public static void Draw(ref Text text, ref Transform transform)
+        {
             var centerOrigin = Vector2.Zero;
 
             if (text.Centered)
@@ -68,7 +73,8 @@ namespace ShitGame {
             );
         }
 
-        public static void LoadLevel(LevelType level) {
+        public static void LoadLevel(LevelType level)
+        {
             Data.CurrentLevel = level;
             Pool.Reset();
             switch (level) {
@@ -78,11 +84,10 @@ namespace ShitGame {
             }
         }
 
-        public static void SetPlayerSpawnPoint(float x, float y) {
-            Data.PlayerSpawnPoint = new Vector2(x, y);
-        }
+        public static void SetPlayerSpawnPoint(float x, float y) => Data.PlayerSpawnPoint = new Vector2(x, y);
 
-        public static uint PlaceStaticObject(float x, float y, ObjectType type) {
+        public static uint PlaceStaticObject(float x, float y, ObjectType type)
+        {
             ref var staticObject = ref Pool.GameObjects_Static[Pool.GetInactiveGameObject_Static()];
             staticObject.Type = type;
 
@@ -98,7 +103,8 @@ namespace ShitGame {
             return staticObject.ID;
         }
 
-        public static void SaveLevel(LevelType level) {
+        public static void SaveLevel(LevelType level)
+        {
             string baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string levelPath = baseDirectory.Remove(baseDirectory.Length - 41) + "Game/Levels";
             var stringBuilder = new StringBuilder();
@@ -116,7 +122,8 @@ namespace ShitGame {
             File.WriteAllText($"{levelPath}\\Level{(uint)level}.cs", stringBuilder.ToString());
         }
 
-        public static string CollectLevelObjects() {
+        public static string CollectLevelObjects()
+        {
             var stringBuilder = new StringBuilder();
             for (uint i = 0; i < Pool.GameObjects_Static.Length; ++i) {
                 if (Pool.GameObjects_Static[i].Active && Pool.GameObjects_Static[i].Type != ObjectType.Undefined)
@@ -125,7 +132,8 @@ namespace ShitGame {
             return stringBuilder.ToString();
         }
 
-        public static void DrawObjects() {
+        public static void DrawObjects()
+        {
             for (uint i = 0; i < Pool.GameObjects_Static.Length; i++) {
                 if (Pool.GameObjects_Static[i].Active)
                     Functions.Draw(ref Pool.GameObjects_Static[i].Sprite,

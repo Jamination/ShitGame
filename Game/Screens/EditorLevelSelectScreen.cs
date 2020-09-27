@@ -12,7 +12,6 @@ namespace ShitGame.Scenes
         public override void Open()
         {
             Camera.Position = Data.ScreenCentre;
-            Data.World.Enabled = false;
 
             uint level = 0;
 
