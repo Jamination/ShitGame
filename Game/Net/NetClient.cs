@@ -42,11 +42,14 @@ namespace ShitGame {
                 } else {
                     var packetId = (NetServer.PacketId)_r.ReadInt(0, NetServer.PACKET_MAX_ID);
                     if (packetId == NetServer.PacketId.PLAYER) {
-                        var p = NetServer.ReadPlayerId(_r);
-                        if (_r.ReadBool())
-                            Players.Insert(p);
-                        else
-                            Players.Remove(p);
+                        var i = _r.ReadInt(0, NetServer.PLAYER_SUB_IDS);
+                        if (i == 0) {
+                            var p = NetServer.ReadPlayerId(_r);
+                            if (_r.ReadBool())
+                                Players.Insert(p);
+                            else
+                                Players.Remove(p);
+                        }
                     }
                 }
             };

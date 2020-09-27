@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 
 namespace ShitGame {
     static class NetServer {
-        public const int PORT = 9595;
+        public const int PORT = 8989;
 
         internal const int PLAYER_SUB_IDS = 1;
 

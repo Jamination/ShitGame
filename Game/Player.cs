@@ -8,7 +8,7 @@ using tainicom.Aether.Physics2D.Dynamics;
 
 namespace ShitGame {
     public static class Players {
-        public const float MoveSpeed = .25f;
+        public const float MoveSpeed = 10;
 
         public static int MaxPlayers { get; private set; }
         public static int LocalID { get; private set; } = -1;
@@ -62,9 +62,8 @@ namespace ShitGame {
                 Sprites[i].Centered = true;
                 Sprites[i].Texture = Data.Texture_Player;
 
-                Bodies[i] = Data.World.CreateRectangle(32, 32, 1, Data.ToSim(Data.PlayerSpawnPoint), 0f, BodyType.Dynamic);
-                Bodies[i].IgnoreGravity = true;
-                Bodies[i].LinearDamping = .01f;
+                Bodies[i] = Data.World.CreateRectangle(Data.ToSim(.5f), Data.ToSim(.5f), 1, Data.ToSim(Data.PlayerSpawnPoint), 0f, BodyType.Dynamic);
+                Bodies[i].LinearDamping = 10;
                 Bodies[i].FixedRotation = true;
             }
         }
