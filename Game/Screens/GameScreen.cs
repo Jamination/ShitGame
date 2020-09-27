@@ -11,12 +11,11 @@ namespace ShitGame.Scenes
         {
             ClearColour = new Color(0f, .1f, .05f, 1f);
             
-            Pool.Reset();
-            Data.World.Clear();
-            Data.World.Enabled = true;
-            
+            Players.Init(1);
+            Players.InsertLocal(Players.GetFreeID());
             Players.Load();
-            Camera.Position = Data.FromSim(Players.Bodies[0].Position);
+            Camera.Position = Data.FromSim(Players.Bodies[Players.LocalID].Position);
+            Functions.LoadLevel(LevelType.Level1);
         }
 
         public override void Update()

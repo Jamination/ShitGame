@@ -32,13 +32,13 @@ namespace ShitGame
 
         public static SpriteFont ButtonFont;
         
-        public static Texture2D Texture_Player;
+        public static Texture2D Texture_Player, Texture_Wall;
 
         public const uint MaxObjects_Static = 1000;
 
-        public const uint LevelCount = 1;
-
         public static LevelType CurrentLevel = LevelType.Undefined;
+
+        public static Vector2 PlayerSpawnPoint = Vector2.Zero;
 
         public static readonly World World = new World() { Gravity = new Vector2(0f), };
         
@@ -56,8 +56,10 @@ namespace ShitGame
 
         public static void LoadAssets()
         {
-            Texture_Player = Content.Load<Texture2D>("Sprites/Shit");
             ButtonFont = Content.Load<SpriteFont>("Fonts/ButtonFont");
+
+            Texture_Player = Content.Load<Texture2D>("Sprites/Shit");
+            Texture_Wall = Content.Load<Texture2D>("Sprites/Wall_1x1");
         }
     }
 }

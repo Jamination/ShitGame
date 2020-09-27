@@ -53,6 +53,7 @@
             {
                 ScreenTransition.Begin(() =>
                 {
+                    Pool.Reset();
                     CurrentScreen = NextScreen;
                     NextScreen = null;
                     CurrentScreen.Open();
@@ -64,6 +65,7 @@
 
         public static void DrawScenes()
         {
+            Functions.DrawObjects();
             CurrentScreen.Draw();
         }
     }

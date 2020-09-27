@@ -7,7 +7,7 @@ namespace ShitGame.Components
         public uint ID;
         public bool Active;
         public Sprite Sprite;
-        public Transform Transform;
         public Body Body;
+        public ObjectType Type;
     }
 }

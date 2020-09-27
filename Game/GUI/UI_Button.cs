@@ -68,8 +68,10 @@ namespace ShitGame.GUI
                     Transform.Scale += new Vector2(.05f);
                     break;
                 case DisplayState.Opened:
-                    if (new Rectangle(Transform.Position.ToPoint() - (Bounds.Size.ToVector2() * .5f).ToPoint(),
-                        Bounds.Size).Contains(Data.MousePosition))
+                    var origin = Transform.Position;
+                    if (Text.Centered)
+                        origin -= (Bounds.Size.ToVector2() * .5f);
+                    if (new Rectangle(origin.ToPoint(), Bounds.Size).Contains(Data.MousePosition))
                     {
                         if (Transform.Scale == Vector2.One)
                             ButtonState = UI_ButtonState.Hovering;

@@ -7,10 +7,11 @@ namespace ShitGame.Scenes
     {
         public static EditorLevelSelectScreen Instance = new EditorLevelSelectScreen();
         
-        public static UI_Button[,] Buttons_Levels = new UI_Button[3, 5];
+        public static UI_Button[,] Buttons_Levels = new UI_Button[5, 3];
         
         public override void Open()
         {
+            Camera.Position = Data.ScreenCentre;
             Data.World.Enabled = false;
 
             uint level = 0;
@@ -19,12 +20,12 @@ namespace ShitGame.Scenes
             {
                 for (uint j = 0; j < Buttons_Levels.GetLength(1); j++)
                 {
-                    Buttons_Levels[i, j] = new UI_Button($"Level {level}", new Vector2(60 + i * 150, 25 + j * 50),
+                    Buttons_Levels[i, j] = new UI_Button($"Level {level}", new Vector2(60 + j * 150, 25 + i * 50),
                         () =>
                         {
                             ScreenManager.EnterScreen(ScreenTypes.EditorScreen);
-                            Functions.LoadLevel((LevelType)level);
                         });
+                    Buttons_Levels[i, j].Text.Centered = false;
                     level++;
                 }
             }

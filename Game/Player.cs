@@ -62,7 +62,7 @@ namespace ShitGame {
                 Sprites[i].Centered = true;
                 Sprites[i].Texture = Data.Texture_Player;
 
-                Bodies[i] = Data.World.CreateRectangle(32, 32, 1, Data.ToSim(Vector2.Zero), 0f, BodyType.Dynamic);
+                Bodies[i] = Data.World.CreateRectangle(32, 32, 1, Data.ToSim(Data.PlayerSpawnPoint), 0f, BodyType.Dynamic);
                 Bodies[i].IgnoreGravity = true;
                 Bodies[i].LinearDamping = .01f;
                 Bodies[i].FixedRotation = true;

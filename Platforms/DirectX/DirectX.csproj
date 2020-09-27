@@ -30,4 +30,10 @@
     </MonoGameContentReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="..\..\Game\Levels">
+      <Link>Levels</Link>
+    </Folder>
+  </ItemGroup>
+
 </Project>

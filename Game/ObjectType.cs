@@ -2,6 +2,7 @@
 {
     public enum ObjectType
     {
-        Player,
+        Undefined,
+        Wall,
     }
 }
