@@ -16,10 +16,7 @@ namespace ShitGame.Levels {
 			Functions.PlaceStaticObject(-45, 104, ObjectType.Wall);
 			Functions.PlaceStaticObject(-213, 19, ObjectType.Wall);
 			Functions.PlaceStaticObject(-128, 41, ObjectType.Wall);
-			Functions.PlaceStaticObject(62, 66, ObjectType.Wall);
 			Functions.PlaceStaticObject(155, 4, ObjectType.Wall);
-			Functions.PlaceStaticObject(51, -58, ObjectType.Wall);
-			Functions.PlaceStaticObject(-93, -42, ObjectType.Wall);
 			Functions.PlaceStaticObject(143, -101, ObjectType.Wall);
 			Functions.PlaceStaticObject(225, -70, ObjectType.Wall);
 			Functions.PlaceStaticObject(226, 11, ObjectType.Wall);

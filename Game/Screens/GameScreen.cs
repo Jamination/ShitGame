@@ -17,9 +17,10 @@ namespace ShitGame.Scenes {
         }
 
         public override void Update() {
-            Data.World.Step(MathF.Min(Time.DeltaTime, (1 / 30f)));
+            const float MAX_STEP = 1 / 30f;
+            Data.World.Step(MathF.Min(Time.DeltaTime, MAX_STEP));
             Players.Update();
-            Camera.Position = Vector2.Lerp(Camera.Position, Data.FromSim(Players.Bodies[0].Position), .1f);
+            Camera.Position = Vector2.Lerp(Camera.Position, Data.FromSim(Players.Bodies[Players.LocalID].Position), .1f);
         }
 
         public override void Draw() {

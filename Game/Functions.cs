@@ -71,7 +71,6 @@ namespace ShitGame {
         public static void LoadLevel(LevelType level) {
             Data.CurrentLevel = level;
             Pool.Reset();
-            Data.World.Clear();
             switch (level) {
                 case LevelType.Level1:
                     Level_1.Load();
@@ -91,7 +90,7 @@ namespace ShitGame {
                 case ObjectType.Wall:
                     staticObject.Sprite.Texture = Data.Texture_Wall;
                     staticObject.Sprite.Centered = true;
-                    staticObject.Body = Data.World.CreateRectangle(Data.ToSim(.5f), Data.ToSim(.5f), 1f, new Vector2(Data.ToSim(x), Data.ToSim(y)), 0f, BodyType.Static);
+                    staticObject.Body = Data.World.CreateRectangle(Data.ToSim(32), Data.ToSim(32), 1f, new Vector2(Data.ToSim(x), Data.ToSim(y)), 0f, BodyType.Static);
                     staticObject.Body.Enabled = true;
                     break;
             }
@@ -130,7 +129,7 @@ namespace ShitGame {
             for (uint i = 0; i < Pool.GameObjects_Static.Length; i++) {
                 if (Pool.GameObjects_Static[i].Active)
                     Functions.Draw(ref Pool.GameObjects_Static[i].Sprite,
-                        Data.FromSim(Pool.GameObjects_Static[i].Body.Position), Vector2.One,
+                        Data.FromSim(Pool.GameObjects_Static[i].Body.Position), new Vector2(32 / 32f),
                         Pool.GameObjects_Static[i].Body.Rotation);
             }
         }

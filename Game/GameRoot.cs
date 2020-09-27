@@ -7,21 +7,18 @@ using ShitGame;
 using ShitGame.GUI;
 using ShitGame.Scenes;
 
-namespace ShitGame
-{
-    public sealed class GameRoot : Game
-    {
+namespace ShitGame {
+    public sealed class GameRoot : Game {
         private ICondition _quit =
             new AnyCondition(
                 new KeyboardCondition(Keys.Escape),
                 new GamePadCondition(GamePadButton.Back, 0)
             );
-        
-        public GameRoot()
-        {
+
+        public GameRoot() {
             Data.Root = this;
             Data.Window = Window;
-            Data.Graphics = new GraphicsDeviceManager(this){
+            Data.Graphics = new GraphicsDeviceManager(this) {
                 PreferredBackBufferWidth = GameSettings.StartWindowWidth,
                 PreferredBackBufferHeight = GameSettings.StartWindowHeight,
                 IsFullScreen = GameSettings.StartFullScreen,
@@ -30,11 +27,10 @@ namespace ShitGame
             Content.RootDirectory = "Content";
             Data.Content = Content;
         }
-        
-        protected override void Initialize()
-        {
+
+        protected override void Initialize() {
             Window.Title = "Shit Game";
-            
+
             IsMouseVisible = true;
             IsFixedTimeStep = true;
 
@@ -43,34 +39,29 @@ namespace ShitGame
 
             Data.Graphics.GraphicsProfile = GraphicsProfile.HiDef;
             Data.Graphics.SynchronizeWithVerticalRetrace = true;
-            
+
             Data.Graphics.ApplyChanges();
             base.Initialize();
-            
+
             InputHelper.Setup(this);
 
             Window.ClientSizeChanged += OnScreenSizeChange;
             OnScreenSizeChange(null, null);
         }
 
-        private void OnScreenSizeChange(object sender, EventArgs e)
-        {
+        private void OnScreenSizeChange(object sender, EventArgs e) {
             Data.ScreenSize = new Vector2(Data.Graphics.PreferredBackBufferWidth, Data.Graphics.PreferredBackBufferHeight);
-            
+
             float outputAspectRatio = Window.ClientBounds.Width / (float)Window.ClientBounds.Height;
             float preferredAspectRatio = GameSettings.StartWindowWidth / (float)GameSettings.StartWindowHeight;
 
-            if (preferredAspectRatio > 0f)
-            {
-                if (outputAspectRatio <= preferredAspectRatio)
-                {
+            if (preferredAspectRatio > 0f) {
+                if (outputAspectRatio <= preferredAspectRatio) {
                     // output is taller than it is wider, bars on top/bottom
                     int presentHeight = (int)((Window.ClientBounds.Width / preferredAspectRatio) + 0.5f);
                     int barHeight = (Window.ClientBounds.Height - presentHeight) / 2;
                     Data.RenderRect = new Rectangle(0, barHeight, Window.ClientBounds.Width, presentHeight);
-                }
-                else
-                {
+                } else {
                     // output is wider than it is tall, bars left/right
                     int presentWidth = (int)((Window.ClientBounds.Height * preferredAspectRatio) + 0.5f);
                     int barWidth = (Window.ClientBounds.Width - presentWidth) / 2;
@@ -79,8 +70,7 @@ namespace ShitGame
             }
         }
 
-        protected override void LoadContent()
-        {
+        protected override void LoadContent() {
             Data.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Data.GameRenderTarget = new RenderTarget2D(Data.Graphics.GraphicsDevice, GameSettings.VirtualWindowWidth, GameSettings.VirtualWindowHeight);
             OnScreenSizeChange(null, null);
@@ -88,19 +78,16 @@ namespace ShitGame
             ScreenManager.Initialise();
         }
 
-        protected override void Update(GameTime gameTime)
-        {
+        protected override void Update(GameTime gameTime) {
             Time.GameTime = gameTime;
             Time.DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            
+
             base.Update(gameTime);
-            
+
             InputHelper.UpdateSetup();
 
-            if (_quit.Pressed())
-            {
-                switch (ScreenManager.ScreenType)
-                {
+            if (_quit.Pressed()) {
+                switch (ScreenManager.ScreenType) {
                     case ScreenTypes.EditorLevelSelectScreen:
                     case ScreenTypes.GameScreen:
                         ScreenManager.EnterScreen(ScreenTypes.MainMenuScreen);
@@ -115,23 +102,22 @@ namespace ShitGame
                         break;
                 }
             }
-            
+
             ScreenManager.UpdateScenes();
 
             Camera.Update();
             InputHelper.UpdateCleanup();
         }
 
-        protected override void Draw(GameTime gameTime)
-        {
+        protected override void Draw(GameTime gameTime) {
             GraphicsDevice.SetRenderTarget(Data.GameRenderTarget);
             GraphicsDevice.Clear(ScreenManager.CurrentScreen.ClearColour);
-            
-            Data.SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointClamp, transformMatrix: Camera.Transform);
+
+            Data.SpriteBatch.Begin(SpriteSortMode.Deferred, samplerState : SamplerState.PointClamp, transformMatrix : Camera.Transform);
             ScreenManager.DrawScenes();
             Data.SpriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
-            
+
             GraphicsDevice.Clear(Color.Black);
             Data.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp);
             Data.SpriteBatch.Draw(Data.GameRenderTarget, Data.RenderRect, null, Data.ScreenColour, 0f, Vector2.Zero, SpriteEffects.None, 1f);
@@ -140,8 +126,7 @@ namespace ShitGame
             base.Draw(gameTime);
         }
 
-        protected override void Dispose(bool disposing)
-        {
+        protected override void Dispose(bool disposing) {
             ScreenManager.CurrentScreen.Close(ExitAction.ExitGame);
             base.Dispose(disposing);
         }
