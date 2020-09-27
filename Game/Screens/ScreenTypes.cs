@@ -4,5 +4,7 @@
     {
         MainMenuScreen,
         GameScreen,
+        EditorLevelSelectScreen,
+        EditorScreen,
     }
 }

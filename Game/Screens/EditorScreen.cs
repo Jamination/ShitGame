@@ -4,9 +4,11 @@ namespace ShitGame.Scenes
 {
     public sealed class EditorScreen : Screen
     {
+        public static EditorScreen Instance = new EditorScreen();
+
         public override void Open()
         {
-            Data.World.Enabled = false;
+            
         }
 
         public override void Close(ExitAction exitAction)

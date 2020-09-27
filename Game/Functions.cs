@@ -66,6 +66,11 @@ namespace ShitGame
                 text.Depth
             );
         }
+
+        public static void LoadLevel(LevelType level)
+        {
+            
+        }
         
         public static T Choose<T>(params T[] list) => list[Data.Random.Next(0, list.ToArray().Length)];
         

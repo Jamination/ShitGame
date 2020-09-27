@@ -36,6 +36,10 @@ namespace ShitGame
 
         public const uint MaxObjects_Static = 1000;
 
+        public const uint LevelCount = 1;
+
+        public static LevelType CurrentLevel = LevelType.Undefined;
+
         public static readonly World World = new World() { Gravity = new Vector2(0f), };
         
         public const float PIXELS_PER_METER = 100,

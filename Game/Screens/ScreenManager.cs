@@ -31,6 +31,12 @@
                 case ScreenTypes.GameScreen:
                     NextScreen = GameScreen.Instance;
                     break;
+                case ScreenTypes.EditorLevelSelectScreen:
+                    NextScreen = EditorLevelSelectScreen.Instance;
+                    break;
+                case ScreenTypes.EditorScreen:
+                    NextScreen = EditorScreen.Instance;
+                    break;
             }
             CurrentScreen.Close(ExitAction.ExitScreen);
         }

@@ -21,8 +21,8 @@ namespace ShitGame.Scenes
 
         public override void Update()
         {
-            Data.World.Step((float)Time.GameTime.ElapsedGameTime.TotalMilliseconds);
             Players.Update();
+            Data.World.Step((float)Time.GameTime.ElapsedGameTime.TotalMilliseconds);
             Camera.Position = Vector2.Lerp(Camera.Position, Data.FromSim(Players.Bodies[0].Position), .1f);
         }
 

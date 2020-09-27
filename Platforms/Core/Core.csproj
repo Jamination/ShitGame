@@ -38,6 +38,27 @@
     <Compile Update="..\..\Game\Scenes\EditorScreen.cs">
       <Link>Screens\EditorScreen.cs</Link>
     </Compile>
+    <Compile Update="..\..\Game\Scenes\EditorScreen.cs">
+      <Link>Scenes\EditorScreen.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Scenes\GameScreen.cs">
+      <Link>Scenes\GameScreen.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Scenes\MainMenuScreen.cs">
+      <Link>Scenes\MainMenuScreen.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Scenes\Screen.cs">
+      <Link>Scenes\Screen.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Scenes\ScreenManager.cs">
+      <Link>Scenes\ScreenManager.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Scenes\ScreenTypes.cs">
+      <Link>Scenes\ScreenTypes.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Screens\EditorScreen.cs">
+      <Link>Screens\EditorScreen.cs</Link>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>

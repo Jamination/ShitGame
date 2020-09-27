@@ -22,10 +22,10 @@ namespace ShitGame
             Data.Root = this;
             Data.Window = Window;
             Data.Graphics = new GraphicsDeviceManager(this){
-                PreferredBackBufferWidth=GameSettings.StartWindowWidth,
-                PreferredBackBufferHeight=GameSettings.StartWindowHeight,
+                PreferredBackBufferWidth = GameSettings.StartWindowWidth,
+                PreferredBackBufferHeight = GameSettings.StartWindowHeight,
                 IsFullScreen = GameSettings.StartFullScreen,
-                HardwareModeSwitch=false
+                HardwareModeSwitch = false
             };
             Content.RootDirectory = "Content";
             Data.Content = Content;
@@ -101,12 +101,17 @@ namespace ShitGame
             {
                 switch (ScreenManager.ScreenType)
                 {
+                    case ScreenTypes.EditorLevelSelectScreen:
                     case ScreenTypes.GameScreen:
                         ScreenManager.EnterScreen(ScreenTypes.MainMenuScreen);
                         break;
                     case ScreenTypes.MainMenuScreen:
                         ScreenManager.CurrentScreen.Close(ExitAction.ExitGame);
                         ScreenTransition.Begin(() => Exit());
+                        break;
+                    case ScreenTypes.EditorScreen:
+                        ScreenManager.CurrentScreen.Close(ExitAction.ExitGame);
+                        ScreenManager.EnterScreen(ScreenTypes.EditorLevelSelectScreen);
                         break;
                 }
             }
