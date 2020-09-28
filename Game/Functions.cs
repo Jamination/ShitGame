@@ -133,6 +133,7 @@ namespace ShitGame
             Zombies.Bodies[id] = Data.World.CreateCircle(Data.ToSim(16), 1f, new Vector2(Data.ToSim(x), Data.ToSim(y)), BodyType.Dynamic);
             Zombies.Bodies[id].LinearDamping = 2f;
             Zombies.Bodies[id].AngularDamping = 2f;
+            Zombies.Bodies[id].FixedRotation = true;
             Zombies.Bodies[id].Tag = new ZombieTag(id);
             
             return id;
@@ -201,5 +202,33 @@ namespace ShitGame
 
         public static Vector2 ScreenToWorld(Vector2 onScreen) =>
             Vector2.Transform(onScreen, Matrix.Invert(Camera.Transform));
+        
+        public static float Lerp (float source, float destination, float amount) => source + (destination - source) * amount;
+        
+        public static float WrapAngle (float angle)
+        {
+            const float TwoPi = MathF.PI * 2;
+            if (angle > -MathF.PI && angle <= MathF.PI)
+                return angle;
+            angle %= TwoPi;
+            if (angle <= -MathF.PI)
+                return angle + TwoPi;
+            if (angle > MathF.PI)
+                return angle - TwoPi;
+            return angle;
+        }
+        
+        public static float LerpAngle (float source, float destination, float amount)
+        {
+            const float TwoPi = MathF.PI * 2;
+            if (destination < source) {
+                var c = destination + TwoPi;
+                return WrapAngle (c - source > source - destination ? Lerp (source, destination, amount) : Lerp (source, c, amount));
+            } else if (destination > source) {
+                var c = destination - TwoPi;
+                return WrapAngle (destination - source > source - c ? Lerp (source, c, amount) : Lerp (source, destination, amount));
+            }
+            return source;
+        }
     }
 }

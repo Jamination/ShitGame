@@ -6,8 +6,10 @@ using Microsoft.Xna.Framework;
 using ShitGame.Components;
 using tainicom.Aether.Physics2D.Dynamics;
 
-namespace ShitGame {
-    public static class Zombies {
+namespace ShitGame
+{
+    public static class Zombies
+    {
         public const uint MaxZombies = 500;
 
         public static float MoveSpeed { get; private set; } = Data.ToSim(20);
@@ -20,7 +22,8 @@ namespace ShitGame {
 
         private static Stack<uint> _freeZombies = new Stack<uint>();
 
-        public static void Load() {
+        public static void Load()
+        {
             _freeZombies.Clear();
             for (uint i = 0; i < MaxZombies; i++)
                 _freeZombies.Push(i);
@@ -42,7 +45,7 @@ namespace ShitGame {
                     }
                     if (closeP != -1 && Data.World.RayCast(Bodies[i].Position, Players.Bodies[closeP].Position).FirstOrDefault() == Players.Bodies[closeP].FixtureList.FirstOrDefault()) {
                         float a = MathF.Atan2(Players.Bodies[closeP].Position.Y - Bodies[i].Position.Y, Players.Bodies[closeP].Position.X - Bodies[i].Position.X);
-                        Angles[i] = a;
+                        Angles[i] = Functions.LerpAngle(Angles[i], a, .05f);
                         Bodies[i].ApplyForce(new Vector2(MathF.Cos(a) * MoveSpeed, MathF.Sin(a) * MoveSpeed));
                     }
                 }
