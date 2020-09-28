@@ -53,6 +53,9 @@ namespace ShitGame
             );
         }
 
+        public static void Draw(ref Sprite sprite, Body body, Vector2 scale)
+            => Draw(ref sprite, Data.FromSim(body.Position), scale, body.Rotation);
+
         public static void Draw(ref Text text, ref Transform transform)
         {
             var centerOrigin = Vector2.Zero;
@@ -102,6 +105,24 @@ namespace ShitGame
 
             return staticObject.ID;
         }
+        
+        public static uint PlaceZombie(float x, float y)
+        {
+            uint id = Zombies.GetInactiveZombie();
+            
+            Zombies.Active[id] = true;
+
+            Zombies.Sprites[id] = new Sprite();
+            Zombies.Sprites[id].Centered = true;
+            Zombies.Sprites[id].Colour = Color.White;
+            Zombies.Sprites[id].Texture = Data.Texture_Zombie;
+
+            Zombies.Bodies[id] = Data.World.CreateCircle(Data.ToSim(16), 1f, new Vector2(Data.ToSim(x), Data.ToSim(y)), BodyType.Dynamic);
+            Zombies.Bodies[id].LinearDamping = 2f;
+            Zombies.Bodies[id].AngularDamping = 2f;
+            
+            return id;
+        }
 
         public static void SaveLevel(LevelType level)
         {
@@ -128,6 +149,10 @@ namespace ShitGame
             for (uint i = 0; i < Pool.GameObjects_Static.Length; ++i) {
                 if (Pool.GameObjects_Static[i].Active && Pool.GameObjects_Static[i].Type != ObjectType.Undefined)
                     stringBuilder.Append("\t\t\tFunctions.PlaceStaticObject(" + (int)Data.FromSim(Pool.GameObjects_Static[i].Body.Position.X) + ", " + (int)Data.FromSim(Pool.GameObjects_Static[i].Body.Position.Y) + ", ObjectType." + Pool.GameObjects_Static[i].Type + ");\n");
+            }
+            for (uint i = 0; i < Zombies.MaxZombies; ++i) {
+                if (Zombies.Active[i])
+                    stringBuilder.Append("\t\t\tFunctions.PlaceZombie(" + (int)Data.FromSim(Zombies.Bodies[i].Position.X) + ", " + (int)Data.FromSim(Zombies.Bodies[i].Position.Y) + ");\n");
             }
             return stringBuilder.ToString();
         }

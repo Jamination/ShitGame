@@ -30,9 +30,10 @@ namespace ShitGame {
 
         public static SpriteFont ButtonFont;
 
-        public static Texture2D Texture_Player, Texture_Wall;
+        public static Texture2D Texture_Player, Texture_Wall, Texture_Zombie;
 
         public const uint MaxObjects_Static = 1000;
+        public const uint MaxSprites = 500;
 
         public static LevelType CurrentLevel = LevelType.Undefined;
 
@@ -55,8 +56,9 @@ namespace ShitGame {
         public static void LoadAssets() {
             ButtonFont = Content.Load<SpriteFont>("Fonts/ButtonFont");
 
-            Texture_Player = Content.Load<Texture2D>("Sprites/Shit");
+            Texture_Player = Content.Load<Texture2D>("Sprites/Player");
             Texture_Wall = Content.Load<Texture2D>("Sprites/Wall_1x1");
+            Texture_Zombie = Content.Load<Texture2D>("Sprites/zombie");
         }
     }
 }

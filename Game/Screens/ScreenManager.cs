@@ -65,7 +65,6 @@
 
         public static void DrawScenes()
         {
-            Functions.DrawObjects();
             CurrentScreen.Draw();
         }
     }

@@ -54,10 +54,6 @@ namespace ShitGame.GUI
             Bounds = new Rectangle(0, 0, (int)fontSize.X, (int)fontSize.Y);
         }
 
-        public override void Open()
-        {
-        }
-
         public override void Update()
         {
             switch (DisplayState)
@@ -133,11 +129,6 @@ namespace ShitGame.GUI
         public override void Draw()
         {
             Functions.Draw(ref Text, ref Transform);
-        }
-
-        public override void Close()
-        {
-            base.Close();
         }
     }
 }

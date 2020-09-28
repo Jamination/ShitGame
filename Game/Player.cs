@@ -8,12 +8,13 @@ using tainicom.Aether.Physics2D.Dynamics;
 
 namespace ShitGame {
     public static class Players {
-        public static float MoveSpeed { get; private set; } = Data.ToSim(500);
+        public static float MoveSpeed { get; private set; } = Data.ToSim(200);
 
         public static int MaxPlayers { get; private set; }
         public static int LocalID { get; private set; } = -1;
         public static Sprite[] Sprites { get; private set; }
         public static Body[] Bodies { get; private set; }
+        public static float[] Angles { get; private set; }
 
         static readonly LinkedList<int> _freeIDs = new LinkedList<int>();
         static readonly HashSet<int> _takenIDs = new HashSet<int>();
@@ -21,6 +22,7 @@ namespace ShitGame {
         internal static void Init(int maxPlayers) {
             Sprites = new Sprite[maxPlayers];
             Bodies = new Body[maxPlayers];
+            Angles = new float[maxPlayers];
             for (int i = 0; i < maxPlayers; i++)
                 _freeIDs.AddLast(i);
             MaxPlayers = maxPlayers;
@@ -62,10 +64,10 @@ namespace ShitGame {
                 Sprites[i].Centered = true;
                 Sprites[i].Texture = Data.Texture_Player;
 
-                Bodies[i] = Data.World.CreateRectangle(Data.ToSim(20) * 2, Data.ToSim(20) * 2, 1, Data.ToSim(Data.PlayerSpawnPoint), 0f, BodyType.Dynamic);
+                Bodies[i] = Data.World.CreateCircle(Data.ToSim(16), 1, Data.ToSim(Data.PlayerSpawnPoint), BodyType.Dynamic);
                 Bodies[i].LinearDamping = 16f;
                 Bodies[i].AngularDamping = 2f;
-                Bodies[i].FixedRotation = false;
+                Bodies[i].FixedRotation = true;
             }
         }
 
@@ -78,12 +80,13 @@ namespace ShitGame {
                 Bodies[LocalID].ApplyForce(new Vector2(0f, -MoveSpeed));
             if (KeyboardCondition.Held(Keys.S))
                 Bodies[LocalID].ApplyForce(new Vector2(0f, MoveSpeed));
+
+            Angles[LocalID] = MathF.Atan2(Data.MousePosition.Y - Data.FromSim(Bodies[LocalID].Position.Y), Data.MousePosition.X - Data.FromSim(Bodies[LocalID].Position.X));
         }
 
         public static void Draw() {
-            for (int i = 0; i < MaxPlayers; i++) {
-                Functions.Draw(ref Sprites[i], Data.FromSim(Bodies[i].Position), Vector2.One * .05f, Bodies[i].Rotation);
-            }
+            for (int i = 0; i < MaxPlayers; i++)
+                Functions.Draw(ref Sprites[i], Data.FromSim(Bodies[i].Position), Vector2.One * 2, Angles[i]);
         }
     }
 }

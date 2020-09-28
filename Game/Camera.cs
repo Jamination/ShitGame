@@ -6,7 +6,7 @@ namespace ShitGame
 {
     public static class Camera
     {
-        public static Vector2 Position;
+        public static Vector2 Position, Velocity;
         public static float Zoom, Rotation;
         public static Matrix Transform;
         public static Viewport Viewport;
@@ -28,6 +28,7 @@ namespace ShitGame
                         Matrix.CreateRotationZ(Rotation) *
                         Matrix.CreateTranslation(new Vector3(Data.ScreenCentre.X,
                             Data.ScreenCentre.Y, 0f));
+            Camera.Position += Camera.Velocity * Time.DeltaTime;
         }
     }
 }
