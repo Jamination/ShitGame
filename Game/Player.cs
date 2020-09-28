@@ -31,12 +31,25 @@ namespace ShitGame {
         internal static void Insert(int i) {
             _freeIDs.Remove(i);
             _takenIDs.Add(i);
+
+            Sprites[i] = new Sprite {
+                Colour = Color.White,
+                Centered = true,
+                Texture = Data.Texture_Player
+            };
+
+            Bodies[i] = Data.World.CreateCircle(Data.ToSim(16), 1, Data.ToSim(Data.PlayerSpawnPoint), BodyType.Dynamic);
+            Bodies[i].LinearDamping = 16f;
+            Bodies[i].AngularDamping = 2f;
+            Bodies[i].FixedRotation = true;
         }
 
         internal static void Remove(int i) {
             if (!_takenIDs.Remove(i))
                 return;
             Data.World.Remove(Bodies[i]);
+            Bodies[i] = null;
+            Sprites[i] = default;
             _freeIDs.AddLast(i);
         }
 
@@ -57,20 +70,6 @@ namespace ShitGame {
             LocalID = -1;
         }
 
-        public static void Load() {
-            for (int i = 0; i < MaxPlayers; i++) {
-                Sprites[i] = new Sprite();
-                Sprites[i].Colour = Color.White;
-                Sprites[i].Centered = true;
-                Sprites[i].Texture = Data.Texture_Player;
-
-                Bodies[i] = Data.World.CreateCircle(Data.ToSim(16), 1, Data.ToSim(Data.PlayerSpawnPoint), BodyType.Dynamic);
-                Bodies[i].LinearDamping = 16f;
-                Bodies[i].AngularDamping = 2f;
-                Bodies[i].FixedRotation = true;
-            }
-        }
-
         public static void Update() {
             if (KeyboardCondition.Held(Keys.A))
                 Bodies[LocalID].ApplyForce(new Vector2(-MoveSpeed, 0f));
@@ -85,7 +84,7 @@ namespace ShitGame {
         }
 
         public static void Draw() {
-            for (int i = 0; i < MaxPlayers; i++)
+            foreach (int i in _takenIDs)
                 Functions.Draw(ref Sprites[i], Data.FromSim(Bodies[i].Position), Vector2.One * 2, Angles[i]);
         }
     }

@@ -11,16 +11,14 @@ namespace ShitGame.Scenes {
 
             Players.Init(1);
             Players.InsertLocal(Players.GetFreeID());
-            
-            Players.Load();
+
             Zombies.Load();
-            
+
             Functions.LoadLevel(LevelType.Level1);
             Camera.Position = Data.FromSim(Players.Bodies[Players.LocalID].Position);
         }
 
-        public override void Update()
-        {
+        public override void Update() {
             const float MAX_STEP = 1 / 30f;
             Data.World.Step(MathF.Min(Time.DeltaTime, MAX_STEP));
             Zombies.Update();
@@ -28,8 +26,7 @@ namespace ShitGame.Scenes {
             Camera.Position = Vector2.Lerp(Camera.Position, Data.FromSim(Players.Bodies[Players.LocalID].Position), .1f);
         }
 
-        public override void Draw()
-        {
+        public override void Draw() {
             Functions.DrawObjects();
             Zombies.Draw();
             Players.Draw();
