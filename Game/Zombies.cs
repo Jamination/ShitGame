@@ -15,6 +15,8 @@ namespace ShitGame {
         public static Sprite[] Sprites = new Sprite[MaxZombies];
         public static Body[] Bodies = new Body[MaxZombies];
         public static bool[] Active = new bool[MaxZombies];
+        public static ZombieType[] Types = new ZombieType[MaxZombies];
+        public static float[] Angles = new float[MaxZombies];
 
         private static Stack<uint> _freeZombies = new Stack<uint>();
 
@@ -40,6 +42,7 @@ namespace ShitGame {
                     }
                     if (closeP != -1 && Data.World.RayCast(Bodies[i].Position, Players.Bodies[closeP].Position).FirstOrDefault() == Players.Bodies[closeP].FixtureList.FirstOrDefault()) {
                         float a = MathF.Atan2(Players.Bodies[closeP].Position.Y - Bodies[i].Position.Y, Players.Bodies[closeP].Position.X - Bodies[i].Position.X);
+                        Angles[i] = a;
                         Bodies[i].ApplyForce(new Vector2(MathF.Cos(a) * MoveSpeed, MathF.Sin(a) * MoveSpeed));
                     }
                 }
@@ -49,7 +52,7 @@ namespace ShitGame {
         public static void Draw() {
             for (uint i = 0; i < MaxZombies; i++) {
                 if (Active[i]) {
-                    Functions.Draw(ref Sprites[i], Bodies[i], Vector2.One * .25f);
+                    Functions.Draw(ref Sprites[i], Data.FromSim(Bodies[i].Position), Vector2.One * .25f, Angles[i]);
                 }
             }
         }

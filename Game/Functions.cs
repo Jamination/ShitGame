@@ -100,17 +100,30 @@ namespace ShitGame
                     staticObject.Sprite.Centered = true;
                     staticObject.Body = Data.World.CreateRectangle(Data.ToSim(32), Data.ToSim(32), 1f, new Vector2(Data.ToSim(x), Data.ToSim(y)), 0f, BodyType.Static);
                     staticObject.Body.Enabled = true;
+                    staticObject.Body.Tag = new StaticObjectTag(staticObject.ID);
                     break;
             }
 
             return staticObject.ID;
         }
         
-        public static uint PlaceZombie(float x, float y)
+        public static bool Intersects(Hitbox HB1, Vector2 pos1, Hitbox HB2, Vector2 pos2) =>
+            new Rectangle((pos1 + HB1.Offset).ToPoint(), HB1.Size.ToPoint()).Intersects(
+                new Rectangle((pos2 + HB2.Offset).ToPoint(), HB2.Size.ToPoint()));
+
+        public static Rectangle Intersect(Hitbox HB1, Vector2 pos1, Hitbox HB2, Vector2 pos2) => Rectangle.Intersect(
+            new Rectangle((pos1 + HB1.Offset).ToPoint(), HB1.Size.ToPoint()),
+            new Rectangle((pos2 + HB2.Offset).ToPoint(), HB2.Size.ToPoint()));
+        
+        public static Rectangle GetBounds(ref Hitbox hitbox, ref Transform transform) => new Rectangle(
+            transform.Position.ToPoint() + hitbox.Offset.ToPoint(), hitbox.Size.ToPoint() * transform.Scale.ToPoint());
+        
+        public static uint PlaceZombie(float x, float y, ZombieType zombieType)
         {
             uint id = Zombies.GetInactiveZombie();
             
             Zombies.Active[id] = true;
+            Zombies.Types[id] = zombieType;
 
             Zombies.Sprites[id] = new Sprite();
             Zombies.Sprites[id].Centered = true;
@@ -120,6 +133,7 @@ namespace ShitGame
             Zombies.Bodies[id] = Data.World.CreateCircle(Data.ToSim(16), 1f, new Vector2(Data.ToSim(x), Data.ToSim(y)), BodyType.Dynamic);
             Zombies.Bodies[id].LinearDamping = 2f;
             Zombies.Bodies[id].AngularDamping = 2f;
+            Zombies.Bodies[id].Tag = new ZombieTag(id);
             
             return id;
         }
@@ -152,9 +166,22 @@ namespace ShitGame
             }
             for (uint i = 0; i < Zombies.MaxZombies; ++i) {
                 if (Zombies.Active[i])
-                    stringBuilder.Append("\t\t\tFunctions.PlaceZombie(" + (int)Data.FromSim(Zombies.Bodies[i].Position.X) + ", " + (int)Data.FromSim(Zombies.Bodies[i].Position.Y) + ");\n");
+                    stringBuilder.Append("\t\t\tFunctions.PlaceZombie(" + (int)Data.FromSim(Zombies.Bodies[i].Position.X) + ", " + (int)Data.FromSim(Zombies.Bodies[i].Position.Y) + ", ZombieType." + Zombies.Types[i] + ");\n");
             }
             return stringBuilder.ToString();
+        }
+
+        public static uint ConvertBodyToStaticObject(Body body)
+        {
+            if (body.Tag is StaticObjectTag)
+            {
+                return ((StaticObjectTag) body.Tag).ID;
+            }
+            else if (body.Tag is ZombieTag)
+            {
+                return ((ZombieTag) body.Tag).ID;
+            }
+            throw new Exception("Could not convert body to static object.");
         }
 
         public static void DrawObjects()

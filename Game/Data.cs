@@ -1,13 +1,16 @@
 ﻿using System;
 using Apos.Input;
+using Dcrew.Spatial;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ShitGame;
 using tainicom.Aether.Physics2D.Dynamics;
 
-namespace ShitGame {
-    public static class Data {
+namespace ShitGame
+{
+    public static class Data
+    {
         public static GraphicsDeviceManager Graphics;
         public static SpriteBatch SpriteBatch;
         public static GameWindow Window;
@@ -38,8 +41,10 @@ namespace ShitGame {
         public static LevelType CurrentLevel = LevelType.Undefined;
 
         public static Vector2 PlayerSpawnPoint = Vector2.Zero;
-
+        
         public static readonly World World = new World(Vector2.Zero);
+
+        public static Quadtree<SpatialItem> GameObjects = new Quadtree<SpatialItem>();
 
         public const float PIXELS_PER_METER = 100,
             SIM_UNITS_PER_PIXEL = 1 / PIXELS_PER_METER;

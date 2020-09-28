@@ -3,6 +3,8 @@ using Apos.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using ShitGame.GUI;
+using tainicom.Aether.Physics2D.Collision;
+using tainicom.Aether.Physics2D.Dynamics;
 
 namespace ShitGame.Scenes
 {
@@ -14,6 +16,11 @@ namespace ShitGame.Scenes
 
         public static float CameraSpeed = NormalCameraSpeed;
 
+        public static Layers Layer = Layers.StaticObjects;
+
+        public static Body Grabbed;
+        public static Vector2 GrabbedOffset;
+
         public override void Open()
         {
             Camera.Position = Vector2.Zero;
@@ -23,8 +30,55 @@ namespace ShitGame.Scenes
 
         public override void Update()
         {
+            if (KeyboardCondition.Pressed(Keys.E))
+                Layer++;
+            else if (KeyboardCondition.Pressed(Keys.Q))
+                Layer--;
+            
+            if (MouseCondition.Pressed(MouseButton.RightButton))
+            {
+                switch (Layer)
+                {
+                    case Layers.StaticObjects:
+                        Functions.PlaceStaticObject(Data.MousePosition.X, Data.MousePosition.Y, ObjectType.Wall);
+                        break;
+                    case Layers.Zombies:
+                        Functions.PlaceZombie(Data.MousePosition.X, Data.MousePosition.Y, ZombieType.Regular);
+                        break;
+                }
+            }
+            
+            if (MouseCondition.Pressed(MouseButton.MiddleButton))
+            {
+                var thing = Data.World.TestPoint(Data.ToSim(Data.MousePosition));
+
+                if (thing != null && thing.Body != null)
+                {
+                    Pool.GameObjects_Static[Functions.ConvertBodyToStaticObject(thing.Body)].Active = false;
+                }
+            }
+            
             if (MouseCondition.Pressed(MouseButton.LeftButton))
-                Functions.PlaceStaticObject(Data.MousePosition.X, Data.MousePosition.Y, ObjectType.Wall);
+            {
+                var thing = Data.World.TestPoint(Data.ToSim(Data.MousePosition));
+
+                if (thing != null && thing.Body != null)
+                {
+                    Grabbed = thing.Body;
+                    GrabbedOffset = thing.Body.Position - Data.ToSim(Data.MousePosition);
+                }
+            }
+
+            if (MouseCondition.Released(MouseButton.LeftButton))
+            {
+                Grabbed = null;
+                GrabbedOffset = Vector2.Zero;
+            }
+
+            if (Grabbed != null)
+            {
+                Grabbed.Position = Data.ToSim(Data.MousePosition) + GrabbedOffset;
+            }
 
             Camera.Velocity = Vector2.Lerp(Camera.Velocity, Vector2.Zero, .25f);
             
@@ -39,9 +93,6 @@ namespace ShitGame.Scenes
             
             if (KeyboardCondition.Pressed(Keys.Enter))
                 Functions.SaveLevel(LevelType.Level1);
-            
-            if (KeyboardCondition.Pressed(Keys.F))
-                Functions.PlaceZombie(Data.MousePosition.X, Data.MousePosition.Y);
         }
 
         public override void Draw()
