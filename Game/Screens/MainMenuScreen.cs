@@ -12,13 +12,14 @@ namespace ShitGame.Scenes
         
         public override void Open()
         {
+            Data.World.Clear();
             Camera.Position = Data.ScreenCentre;
             
-            Button_Play = new UI_Button("Play", Data.ScreenCentre - new Vector2(0f, 20f), () => ScreenManager.EnterScreen(ScreenTypes.GameScreen));
+            Button_Play = new UI_Button("Play", Data.ScreenCentre - new Vector2(0f, 80f), () => ScreenManager.EnterScreen(ScreenTypes.GameScreen));
             Button_Play.Open();
-            Button_Quit = new UI_Button("Quit", Data.ScreenCentre + new Vector2(0f, 20f), () => Close(ExitAction.ExitGame));
+            Button_Quit = new UI_Button("Quit", Data.ScreenCentre + new Vector2(0f, 80f), () => Close(ExitAction.ExitGame));
             Button_Quit.Open();
-            Button_Editor = new UI_Button("Editor", new Vector2(60, 25), () => ScreenManager.EnterScreen(ScreenTypes.EditorLevelSelectScreen));
+            Button_Editor = new UI_Button("Editor", new Vector2(60 * 4, 25 * 4), () => ScreenManager.EnterScreen(ScreenTypes.EditorLevelSelectScreen));
 #if DEBUG
             Button_Editor.Open();
 #endif
@@ -45,7 +46,7 @@ namespace ShitGame.Scenes
 #endif
         }
 
-        public override void Draw()
+        public override void DrawUI()
         {
             Button_Play.Draw();
             Button_Quit.Draw();

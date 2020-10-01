@@ -12,7 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aether.Physics2D.Diagnostics.MG" Version="1.5.0" />
     <PackageReference Include="Aether.Physics2D.MG" Version="1.5.0" />
+    <PackageReference Include="Coroutine" Version="2.0.0" />
     <PackageReference Include="Dcrew.Spatial" Version="1.6.4.1" />
     <PackageReference Include="LiteNetLib" Version="0.9.3.2" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1375-develop" />
@@ -29,6 +31,27 @@
     </Compile>
     <Compile Update="..\..\Game\Components\SpriteObject.cs">
       <Link>Components\LevelSprite.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\GUI\UI_Label.cs">
+      <Link>GUI\UI_Label.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Components\Hitbox.cs">
+      <Link>Hitbox.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Components\Sprite.cs">
+      <Link>Sprite.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Components\SpriteObject.cs">
+      <Link>SpriteObject.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Components\StaticObject.cs">
+      <Link>StaticObject.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Components\Text.cs">
+      <Link>Text.cs</Link>
+    </Compile>
+    <Compile Update="..\..\Game\Components\Transform.cs">
+      <Link>Transform.cs</Link>
     </Compile>
   </ItemGroup>
 

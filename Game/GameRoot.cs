@@ -74,7 +74,7 @@ namespace ShitGame {
             Data.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Data.GameRenderTarget = new RenderTarget2D(Data.Graphics.GraphicsDevice, GameSettings.VirtualWindowWidth, GameSettings.VirtualWindowHeight);
             OnScreenSizeChange(null, null);
-            Data.LoadAssets();
+            Functions.LoadAssets();
             ScreenManager.Initialise();
         }
 
@@ -116,6 +116,11 @@ namespace ShitGame {
             Data.SpriteBatch.Begin(SpriteSortMode.Deferred, samplerState : SamplerState.PointClamp, transformMatrix : Camera.Transform);
             ScreenManager.DrawScenes();
             Data.SpriteBatch.End();
+            
+            Data.SpriteBatch.Begin(SpriteSortMode.Deferred, samplerState : SamplerState.PointClamp);
+            ScreenManager.DrawSceneUI();
+            Data.SpriteBatch.End();
+            
             GraphicsDevice.SetRenderTarget(null);
 
             GraphicsDevice.Clear(Color.Black);

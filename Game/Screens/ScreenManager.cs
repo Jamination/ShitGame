@@ -67,5 +67,10 @@
         {
             CurrentScreen.Draw();
         }
+
+        public static void DrawSceneUI()
+        {
+            CurrentScreen.DrawUI();
+        }
     }
 }

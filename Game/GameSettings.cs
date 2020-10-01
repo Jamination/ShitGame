@@ -4,12 +4,12 @@ namespace ShitGame
 {
     public static class GameSettings
     {
-        public const int StartWindowWidth = 1280;
-        public const int StartWindowHeight = 720;
+        public const int StartWindowWidth = 1920;
+        public const int StartWindowHeight = 1080;
         
-        public static int VirtualWindowWidth = 640;
-        public static int VirtualWindowHeight = 360;
+        public static int VirtualWindowWidth = StartWindowWidth;
+        public static int VirtualWindowHeight = StartWindowHeight;
         
-        public const bool StartFullScreen = false;
+        public const bool StartFullScreen = true;
     }
 }

@@ -19,7 +19,7 @@ namespace ShitGame.Scenes
             {
                 for (uint j = 0; j < Buttons_Levels.GetLength(1); j++)
                 {
-                    Buttons_Levels[i, j] = new UI_Button($"Level {level}", new Vector2(60 + j * 150, 25 + i * 50),
+                    Buttons_Levels[i, j] = new UI_Button($"Level {level}", new Vector2(60 + j * 150 * 4, 25 + i * 50 * 4),
                         () =>
                         {
                             ScreenManager.EnterScreen(ScreenTypes.EditorScreen);
@@ -52,7 +52,7 @@ namespace ShitGame.Scenes
             }
         }
 
-        public override void Draw()
+        public override void DrawUI()
         {
             for (uint i = 0; i < Buttons_Levels.GetLength(0); i++)
             {

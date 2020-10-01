@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using ShitGame;
+using tainicom.Aether.Physics2D.Diagnostics;
 using tainicom.Aether.Physics2D.Dynamics;
 
 namespace ShitGame
@@ -31,9 +32,9 @@ namespace ShitGame
 
         public static Random Random = new Random();
 
-        public static SpriteFont ButtonFont;
+        public static SpriteFont ButtonFont, SmallFont;
 
-        public static Texture2D Texture_Player, Texture_Wall, Texture_Zombie;
+        public static Texture2D Texture_Player, Texture_Wall, Texture_Zombie, Texture_Background_Level1;
 
         public const uint MaxObjects_Static = 1000;
         public const uint MaxSprites = 500;
@@ -43,27 +44,11 @@ namespace ShitGame
         public static Vector2 PlayerSpawnPoint = Vector2.Zero;
         
         public static readonly World World = new World(Vector2.Zero);
+        public static readonly DebugView DebugView = new DebugView(World);
 
         public static Quadtree<SpatialItem> GameObjects = new Quadtree<SpatialItem>();
 
         public const float PIXELS_PER_METER = 100,
             SIM_UNITS_PER_PIXEL = 1 / PIXELS_PER_METER;
-
-        public static float FromSim(float simUnits) => simUnits * PIXELS_PER_METER;
-        public static float FromSim(double simUnits) => (float)(simUnits * PIXELS_PER_METER);
-        public static float FromSim(int simUnits) => simUnits * PIXELS_PER_METER;
-        public static Vector2 FromSim(Vector2 simUnits) => simUnits * PIXELS_PER_METER;
-        public static float ToSim(float displayUnits) => displayUnits * SIM_UNITS_PER_PIXEL;
-        public static float ToSim(double displayUnits) => (float)(displayUnits * SIM_UNITS_PER_PIXEL);
-        public static float ToSim(int displayUnits) => displayUnits * SIM_UNITS_PER_PIXEL;
-        public static Vector2 ToSim(Vector2 displayUnits) => displayUnits * SIM_UNITS_PER_PIXEL;
-
-        public static void LoadAssets() {
-            ButtonFont = Content.Load<SpriteFont>("Fonts/ButtonFont");
-
-            Texture_Player = Content.Load<Texture2D>("Sprites/Player");
-            Texture_Wall = Content.Load<Texture2D>("Sprites/Wall_1x1");
-            Texture_Zombie = Content.Load<Texture2D>("Sprites/zombie");
-        }
     }
 }

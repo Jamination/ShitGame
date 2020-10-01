@@ -28,7 +28,14 @@ namespace ShitGame
                         Matrix.CreateRotationZ(Rotation) *
                         Matrix.CreateTranslation(new Vector3(Data.ScreenCentre.X,
                             Data.ScreenCentre.Y, 0f));
-            Camera.Position += Camera.Velocity * Time.DeltaTime;
+            Position += Velocity * Time.DeltaTime;
+        }
+
+        public static void FollowPlayer()
+        {
+            Position = Vector2.Lerp(Position, Functions.FromSim(Players.Bodies[Players.LocalID].Position), .1f);
+            Position = Vector2.Clamp(Position, new Vector2(-128 * 12) + Data.ScreenCentre,
+                new Vector2(128 * 12) - Data.ScreenCentre);
         }
     }
 }

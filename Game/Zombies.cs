@@ -12,7 +12,7 @@ namespace ShitGame
     {
         public const uint MaxZombies = 500;
 
-        public static float MoveSpeed { get; private set; } = Data.ToSim(20);
+        public static float MoveSpeed { get; private set; } = Functions.ToSim(1000);
 
         public static Sprite[] Sprites = new Sprite[MaxZombies];
         public static Body[] Bodies = new Body[MaxZombies];
@@ -55,7 +55,7 @@ namespace ShitGame
         public static void Draw() {
             for (uint i = 0; i < MaxZombies; i++) {
                 if (Active[i]) {
-                    Functions.Draw(ref Sprites[i], Data.FromSim(Bodies[i].Position), Vector2.One * .25f, Angles[i]);
+                    Functions.Draw(ref Sprites[i], Functions.FromSim(Bodies[i].Position), Vector2.One, Angles[i]);
                 }
             }
         }

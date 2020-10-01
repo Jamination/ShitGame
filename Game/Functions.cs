@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ShitGame.Components;
 using ShitGame.Levels;
+using tainicom.Aether.Physics2D.Diagnostics;
 using tainicom.Aether.Physics2D.Dynamics;
 
 namespace ShitGame
@@ -54,7 +55,7 @@ namespace ShitGame
         }
 
         public static void Draw(ref Sprite sprite, Body body, Vector2 scale)
-            => Draw(ref sprite, Data.FromSim(body.Position), scale, body.Rotation);
+            => Draw(ref sprite, Functions.FromSim(body.Position), scale, body.Rotation);
 
         public static void Draw(ref Text text, ref Transform transform)
         {
@@ -98,7 +99,7 @@ namespace ShitGame
                 case ObjectType.Wall:
                     staticObject.Sprite.Texture = Data.Texture_Wall;
                     staticObject.Sprite.Centered = true;
-                    staticObject.Body = Data.World.CreateRectangle(Data.ToSim(32), Data.ToSim(32), 1f, new Vector2(Data.ToSim(x), Data.ToSim(y)), 0f, BodyType.Static);
+                    staticObject.Body = Data.World.CreateRectangle(Functions.ToSim(32 * 4), Functions.ToSim(32 * 4), 1f, new Vector2(Functions.ToSim(x), Functions.ToSim(y)), 0f, BodyType.Static);
                     staticObject.Body.Enabled = true;
                     staticObject.Body.Tag = new StaticObjectTag(staticObject.ID);
                     break;
@@ -130,7 +131,7 @@ namespace ShitGame
             Zombies.Sprites[id].Colour = Color.White;
             Zombies.Sprites[id].Texture = Data.Texture_Zombie;
 
-            Zombies.Bodies[id] = Data.World.CreateCircle(Data.ToSim(16), 1f, new Vector2(Data.ToSim(x), Data.ToSim(y)), BodyType.Dynamic);
+            Zombies.Bodies[id] = Data.World.CreateCircle(Functions.ToSim(16 * 4), 1f, new Vector2(Functions.ToSim(x), Functions.ToSim(y)), BodyType.Dynamic);
             Zombies.Bodies[id].LinearDamping = 2f;
             Zombies.Bodies[id].AngularDamping = 2f;
             Zombies.Bodies[id].FixedRotation = true;
@@ -141,6 +142,8 @@ namespace ShitGame
 
         public static void SaveLevel(LevelType level)
         {
+            Data.PlayerSpawnPoint = new Vector2((int)Functions.FromSim(Players.Bodies[Players.LocalID].Position.X),
+                Functions.FromSim((int)Players.Bodies[Players.LocalID].Position.Y));
             string baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string levelPath = baseDirectory.Remove(baseDirectory.Length - 41) + "Game/Levels";
             var stringBuilder = new StringBuilder();
@@ -163,11 +166,11 @@ namespace ShitGame
             var stringBuilder = new StringBuilder();
             for (uint i = 0; i < Pool.GameObjects_Static.Length; ++i) {
                 if (Pool.GameObjects_Static[i].Active && Pool.GameObjects_Static[i].Type != ObjectType.Undefined)
-                    stringBuilder.Append("\t\t\tFunctions.PlaceStaticObject(" + (int)Data.FromSim(Pool.GameObjects_Static[i].Body.Position.X) + ", " + (int)Data.FromSim(Pool.GameObjects_Static[i].Body.Position.Y) + ", ObjectType." + Pool.GameObjects_Static[i].Type + ");\n");
+                    stringBuilder.Append("\t\t\tFunctions.PlaceStaticObject(" + (int)Functions.FromSim(Pool.GameObjects_Static[i].Body.Position.X) + ", " + (int)Functions.FromSim(Pool.GameObjects_Static[i].Body.Position.Y) + ", ObjectType." + Pool.GameObjects_Static[i].Type + ");\n");
             }
             for (uint i = 0; i < Zombies.MaxZombies; ++i) {
                 if (Zombies.Active[i])
-                    stringBuilder.Append("\t\t\tFunctions.PlaceZombie(" + (int)Data.FromSim(Zombies.Bodies[i].Position.X) + ", " + (int)Data.FromSim(Zombies.Bodies[i].Position.Y) + ", ZombieType." + Zombies.Types[i] + ");\n");
+                    stringBuilder.Append("\t\t\tFunctions.PlaceZombie(" + (int)Functions.FromSim(Zombies.Bodies[i].Position.X) + ", " + (int)Functions.FromSim(Zombies.Bodies[i].Position.Y) + ", ZombieType." + Zombies.Types[i] + ");\n");
             }
             return stringBuilder.ToString();
         }
@@ -190,9 +193,45 @@ namespace ShitGame
             for (uint i = 0; i < Pool.GameObjects_Static.Length; i++) {
                 if (Pool.GameObjects_Static[i].Active)
                     Functions.Draw(ref Pool.GameObjects_Static[i].Sprite,
-                        Data.FromSim(Pool.GameObjects_Static[i].Body.Position), new Vector2(32 / 32f),
+                        Functions.FromSim(Pool.GameObjects_Static[i].Body.Position), Vector2.One * 4,
                         Pool.GameObjects_Static[i].Body.Rotation);
             }
+        }
+        
+        public static float FromSim(float simUnits) => simUnits * Data.PIXELS_PER_METER;
+        public static float FromSim(double simUnits) => (float)(simUnits * Data.PIXELS_PER_METER);
+        public static float FromSim(int simUnits) => simUnits * Data.PIXELS_PER_METER;
+        public static Vector2 FromSim(Vector2 simUnits) => simUnits * Data.PIXELS_PER_METER;
+        public static float ToSim(float displayUnits) => displayUnits * Data.SIM_UNITS_PER_PIXEL;
+        public static float ToSim(double displayUnits) => (float)(displayUnits * Data.SIM_UNITS_PER_PIXEL);
+        public static float ToSim(int displayUnits) => displayUnits * Data.SIM_UNITS_PER_PIXEL;
+        public static Vector2 ToSim(Vector2 displayUnits) => displayUnits * Data.SIM_UNITS_PER_PIXEL;
+        
+        public static void LoadAssets()
+        {
+            Data.DebugView.LoadContent(Data.Graphics.GraphicsDevice, Data.Content, new PrimitiveBatch(Data.Graphics.GraphicsDevice));
+
+            Data.ButtonFont = Data.Content.Load<SpriteFont>("Fonts/ButtonFont");
+            Data.SmallFont = Data.Content.Load<SpriteFont>("Fonts/SmallFont");
+
+            Data.Texture_Player = Data.Content.Load<Texture2D>("Sprites/Player");
+            Data.Texture_Wall = Data.Content.Load<Texture2D>("Sprites/Wall_1x1");
+            Data.Texture_Zombie = Data.Content.Load<Texture2D>("Sprites/zombie");
+            Data.Texture_Background_Level1 = Data.Content.Load<Texture2D>("Sprites/Background_Level1");
+        }
+
+        public static void DrawDebug()
+        {
+            Data.DebugView.BeginCustomDraw(Matrix.Identity, Camera.Transform, BlendState.NonPremultiplied,
+                SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullClockwise);
+            for (int i = 0; i < Pool.GameObjects_Static.Length; i++)
+            {
+                if (Pool.GameObjects_Static[i].Active)
+                {
+                    Data.DebugView.DrawShape(Pool.GameObjects_Static[i].Body.FixtureList[0], Pool.GameObjects_Static[i].Body.GetTransform(), Color.White);
+                }
+            }
+            Data.DebugView.EndCustomDraw();
         }
 
         public static T Choose<T>(params T[] list) => list[Data.Random.Next(0, list.ToArray().Length)];

@@ -8,7 +8,7 @@ namespace ShitGame
         private static Action _callBack;
 
         private static byte _transitionSpeed = 16;
-        
+
         public static void Begin(Action callBack, byte transitionSpeed = 16)
         {
             _callBack = callBack;
